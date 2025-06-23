@@ -1,4 +1,5 @@
 
+
 {---
 aliens
 by jeff duntemann
@@ -8,8 +9,12 @@ from: freepascal from square one by jeff duntemann
 ---}
 
 Program aliens;
+{$mode objfpc}
 
-Uses crt;
+Uses 
+crt,
+sysutils,
+character;
 
 Const 
   maxlength = 9;   {The longest name we'll try to generate }
@@ -27,29 +32,55 @@ Var
   nameswanted : integer;
   currentname : namestring;
 
+  z : string;
+  a : integer;
+  c: smallint;
+
 Begin
   randomize;
   printables := ['A'..'Z', 'a'..'z'];
   clrscr;
+  nameswanted := 0;
   write('How many alien names do you want? (1-10): ');
+  Repeat
+    readln(z);
 
-  readln(nameswanted);
+    Try
+      nameswanted := strtoint(z);
+    Except
+      on e : econverterror Do
+             writeln('Invalid number.');
+  End;
 
-  For i := 1 To nameswanted Do
-    Begin
-      currentname := '';
-      Repeat
-        namelength := random(maxlength);
-      Until namelength > minlength;
+  write('nameswanted is: ');
+  writeln(nameswanted);
+Until (nameswanted > 0) And (nameswanted <=10);
 
-      For j := 1 To namelength Do
-        Begin
-          Repeat
-            namechar := chr(random(lastletter));
-          Until namechar In printables;
-          currentname := currentname+namechar;
-        End;
-      writeln(currentname);
-    End;
-  readln
+For i := 1 To nameswanted Do
+  Begin
+    currentname := '';
+    Repeat
+      namelength := random(maxlength);
+    Until namelength > minlength;
+
+    For j := 1 To namelength Do
+      Begin
+        Repeat
+          namechar := chr(random(lastletter));
+        Until namechar In printables;
+        currentname := currentname+namechar;
+      End;
+    writeln(currentname);
+  End;
+readln
 End.
+
+
+{
+Bug:
+
+1. Input < 1 no output        (fixed)
+2. Input is character, runtime error
+3. Input > 10 still works
+
+}
