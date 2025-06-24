@@ -1,12 +1,12 @@
 {---
-aliens
+aliens2
 by jeff duntemann
 freepascal v.2.2.0
 last update 2/8/2008
 from: freepascal from square one by jeff duntemann
 ---}
 
-Program aliens;
+Program aliens2;
 {$mode objfpc}
 
 Uses 
@@ -22,6 +22,8 @@ Const
 Type 
   namestring = string[maxlength];
 
+  colors = (red,orange,yellow,green,blue,ingigo,violet);
+
 Var 
   printables : set Of char;
   i,j : integer;
@@ -31,6 +33,18 @@ Var
   currentname : namestring;
 
   tempstring : string;
+
+  function pull(minvalue, maxvalue: integer): integer;
+
+  var i: integer;
+
+  begin
+      repeat
+          I := random(maxvalue);
+          until i >= minvalue;
+          pull := i;
+  end;
+
 
 Begin
   randomize;
@@ -55,9 +69,7 @@ Until (nameswanted > 0) And (nameswanted <=10);
 For i := 1 To nameswanted Do
   Begin
     currentname := '';
-    Repeat
-      namelength := random(maxlength);
-    Until namelength > minlength;
+      namelength := pull(minlength,maxlength);
 
     For j := 1 To namelength Do
       Begin
@@ -74,10 +86,6 @@ End.
 
 
 {
-Bug:
-
-1. Input < 1 no output        (fixed)
-2. Input is character, runtime error (fixed)
-3. Input > 10 still works (fixed)
+Introduce function
 
 }
