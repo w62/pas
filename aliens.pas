@@ -1,5 +1,6 @@
 
 
+
 {---
 aliens
 by jeff duntemann
@@ -32,9 +33,7 @@ Var
   nameswanted : integer;
   currentname : namestring;
 
-  z : string;
-  a : integer;
-  c: smallint;
+  tempstring : string;
 
 Begin
   randomize;
@@ -43,10 +42,10 @@ Begin
   nameswanted := 0;
   write('How many alien names do you want? (1-10): ');
   Repeat
-    readln(z);
+    readln(tempstring);
 
     Try
-      nameswanted := strtoint(z);
+      nameswanted := strtoint(tempstring);
     Except
       on e : econverterror Do
              writeln('Invalid number.');
@@ -76,11 +75,12 @@ readln
 End.
 
 
+
 {
 Bug:
 
 1. Input < 1 no output        (fixed)
-2. Input is character, runtime error
-3. Input > 10 still works
+2. Input is character, runtime error (fixed)
+3. Input > 10 still works (fixed)
 
 }
